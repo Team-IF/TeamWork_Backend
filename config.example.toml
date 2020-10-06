@@ -1,0 +1,16 @@
+[server]
+debug = true
+port = 9096
+useTestDB = true
+
+
+[db]
+hostname = ""
+port = 3306
+username = ""
+password = ""
+dbname = ""
+
+
+[testdb]
+path = "./test.db"

@@ -3,8 +3,9 @@ module github.com/Team-IF/TeamWork_Backend
 go 1.14
 
 require (
+	github.com/BurntSushi/toml v0.3.1
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
-	github.com/gin-gonic/gin v1.6.3 // indirect
+	github.com/gin-gonic/gin v1.6.3
 	github.com/go-playground/validator/v10 v10.4.0 // indirect
 	github.com/golang/protobuf v1.4.2 // indirect
 	github.com/json-iterator/go v1.1.10 // indirect
@@ -16,6 +17,7 @@ require (
 	golang.org/x/sys v0.0.0-20201005172224-997123666555 // indirect
 	google.golang.org/protobuf v1.25.0 // indirect
 	gopkg.in/yaml.v2 v2.3.0 // indirect
-	gorm.io/driver/mysql v1.0.2 // indirect
-	gorm.io/driver/sqlite v1.1.3 // indirect
+	gorm.io/driver/mysql v1.0.2
+	gorm.io/driver/sqlite v1.1.3
+	gorm.io/gorm v1.20.2
 )
