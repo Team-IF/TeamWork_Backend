@@ -13,7 +13,7 @@ func SetUserRoutes(r *gin.RouterGroup) {
 	r.PATCH("/@me", m.CheckAuth(), c.UpdateProfile)
 	r.PATCH("/@me/password", m.CheckAuth(), m.VerifyRequest(&req.UserResetPassword{}), c.UpdatePassword)
 
-	r.POST("/signin", m.VerifyRequest(&req.UserSignIn{}), c.SignIn)
+	r.GET("/signin", c.SignIn)
 	r.POST("/signup", m.VerifyRequest(&req.UserSignUp{}), c.SignUp)
 
 	r.POST("/emailverify", c.VerifyEmail)

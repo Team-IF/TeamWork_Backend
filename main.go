@@ -22,10 +22,12 @@ import (
 )
 
 func main() {
-	etcInit()
+	// etcInit()
 	applyConfig()
-	initDB()
-	startServer()
+	// initDB()
+	// startServer()
+
+	utils.SendVefiryMail("qwerqwer", "gangjun2006@gmail.com")
 }
 
 func etcInit() {

@@ -16,4 +16,12 @@ type Config struct {
 	TestDB struct {
 		Path string
 	}
+	Mailgun struct {
+		ApiKey string
+		Domain string
+		Sender string
+	}
+	Etc struct {
+		JwtSecret string
+	}
 }

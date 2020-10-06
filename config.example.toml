@@ -3,14 +3,20 @@ debug = true
 port = 9096
 useTestDB = true
 
-
 [db]
+dbname = ""
 hostname = ""
+password = ""
 port = 3306
 username = ""
-password = ""
-dbname = ""
-
 
 [testdb]
 path = "./test.db"
+
+[mailgun]
+apikey = ""
+domain = ""
+sender = ""
+
+[etc]
+jwtsecret = "jwtSecret"

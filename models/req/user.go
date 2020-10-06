@@ -9,8 +9,8 @@ type UserSignUp struct {
 }
 
 type UserSignIn struct {
-	ID       string `json:"id" binding:"required"`
-	Password string `json:"password" binding:"required"`
+	ID       string `form:"id"`
+	Password string `form:"password"`
 }
 
 type UserUpdatePassword struct {
