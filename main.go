@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"time"
 
-	// dbmodels "github.com/Team-IF/TeamWork_Backend/models"
+	dbmodels "github.com/Team-IF/TeamWork_Backend/models/db"
 	v1 "github.com/Team-IF/TeamWork_Backend/routes/v1"
 	"gorm.io/driver/mysql"
 	"gorm.io/driver/sqlite"
@@ -82,7 +82,7 @@ func initDB() {
 	utils.SetDB(db)
 	log.Print("Successfully Connected To Database")
 
-	var models = []interface{}{}
+	var models = []interface{}{&dbmodels.User{}, &dbmodels.UserEmail{}}
 
 	if err := db.AutoMigrate(models...); err != nil {
 		log.Fatalln("Failed to perform AutoMigrate.")
