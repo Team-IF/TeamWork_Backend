@@ -38,11 +38,11 @@ func VerifyEmail(c *gin.Context) {
 	body := c.MustGet("body").(*req.UserVerifyEmail)
 	if err := db.VerifyEmail(body.Email, body.VerifyCode); err != nil {
 		if err == gorm.ErrRecordNotFound {
-			r.SendError(resutil.ERR_BAD_REQUEST, "Code or Email is not match")
+			r.SendError(resutil.ERR_NOT_MATCH, "Code or Email is not match")
 		} else if err == db.ErrAlreadyVerified {
-			r.SendError(resutil.ERR_BAD_REQUEST, "This Account is already Verified")
+			r.SendError(resutil.ERR_ALREADY_VERIFIED, "This Account is already Verified")
 		} else if err == db.ErrExpired {
-			r.SendError(resutil.ERR_BAD_REQUEST, "verify code expired")
+			r.SendError(resutil.ERR_EXPIRED, "verify code expired")
 		} else {
 			r.SendError(resutil.ERR_SERVER, "Error while select")
 		}

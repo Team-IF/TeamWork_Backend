@@ -13,6 +13,9 @@ const (
 	ERR_SERVER
 	ERR_DUPLICATE
 	ERR_AUTH
+	ERR_EXPIRED
+	ERR_ALREADY_VERIFIED
+	ERR_NOT_MATCH
 )
 
 func (r *res) SendError(errType ErrType, text string) {
@@ -34,6 +37,12 @@ func (r *res) SendError(errType ErrType, text string) {
 		set("ERR_DUPLICATE", text, http.StatusConflict)
 	case ERR_AUTH:
 		set("ERR_AUTH", text, http.StatusUnauthorized)
+	case ERR_EXPIRED:
+		set("ERR_EXPIRED", text, http.StatusBadRequest)
+	case ERR_ALREADY_VERIFIED:
+		set("ERR_ALREADY_VERIFIED", text, http.StatusBadRequest)
+	case ERR_NOT_MATCH:
+		set("ERR_NOT_MATCH", text, http.StatusBadRequest)
 	}
 
 	r.c.JSON(Status, gin.H{
