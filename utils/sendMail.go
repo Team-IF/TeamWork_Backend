@@ -2,7 +2,6 @@ package utils
 
 import (
 	"context"
-	"fmt"
 	"strconv"
 	"time"
 
@@ -23,12 +22,34 @@ func SendVefiryMail(verifyCode, reciver string) error {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
 	defer cancel()
 
-	resp, id, err := mg.Send(ctx, message)
+	_, _, err := mg.Send(ctx, message)
 
 	if err != nil {
 		return err
 	}
 
-	fmt.Printf("ID: %s Resp: %s\n", id, resp)
+	return nil
+}
+
+func SendResetPasswordMail(code, reciver string) error {
+	config := GetConfig().Mailgun
+
+	// Create an instance of the Mailgun Client
+	mg := mailgun.NewMailgun(config.Domain, config.ApiKey)
+
+	message := mg.NewMessage(config.Sender, "TeamWork 비밀번호 변경", "", reciver)
+	message.SetTemplate("teamwork_emailverify")
+	message.AddTemplateVariable("link", "https://example.com/"+code)
+	message.AddTemplateVariable("year", strconv.Itoa(time.Now().Year()))
+
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
+	defer cancel()
+
+	_, _, err := mg.Send(ctx, message)
+
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
