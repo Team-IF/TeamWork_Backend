@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func SetUserRoutes(r *gin.RouterGroup) {
+func setUserRoutes(r *gin.RouterGroup) {
 
 	r.GET("/@me", m.CheckAuth(), c.GetProile)
 	r.PATCH("/@me", m.CheckAuth(), c.UpdateProfile)

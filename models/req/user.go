@@ -1,11 +1,11 @@
 package req
 
 type UserSignUp struct {
-	UserID   string `json:"userid" binding:"required"`
-	Name     string `json:"name" binding:"required"`
-	Email    string `json:"email" binding:"required"`
-	Avatar   string `json:"avatar"`
-	Password string `json:"password" binding:"required"`
+	Name        string `json:"userid" binding:"required"`
+	DisplayName string `json:"name" binding:"required"`
+	Email       string `json:"email" binding:"required"`
+	Avatar      string `json:"avatar"`
+	Password    string `json:"password" binding:"required"`
 }
 
 type UserSignIn struct {

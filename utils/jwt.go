@@ -8,7 +8,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 )
 
-func GetJwtToken(id int) (string, error) {
+func GetJwtToken(id uint) (string, error) {
 	expirationTime := time.Now().Add(time.Hour * 24 * 14)
 
 	claims := &models.Claims{
