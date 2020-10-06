@@ -5,10 +5,10 @@ import (
 	// resutil "github.com/Team-IF/TeamWork_Backend/utils/res"
 )
 
-func resetPasswordVerify(c *gin.Context) {
+func ResetPasswordVerify(c *gin.Context) {
 	// r := resutil.New(c)
 }
 
-func resetPassword(c *gin.Context) {
+func ResetPassword(c *gin.Context) {
 	// r := resutil.New(c)
 }

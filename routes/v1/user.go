@@ -9,17 +9,18 @@ import (
 
 func SetUserRoutes(r *gin.RouterGroup) {
 
+	r.GET("/@me", m.CheckAuth(), c.GetProile)
+	r.PATCH("/@me", m.CheckAuth(), c.UpdateProfile)
+	r.PATCH("/@me/password", m.CheckAuth(), m.VerifyRequest(&req.UserResetPassword{}), c.UpdatePassword)
+
 	r.POST("/signin", m.VerifyRequest(&req.UserSignIn{}), c.SignIn)
 	r.POST("/signup", m.VerifyRequest(&req.UserSignUp{}), c.SignUp)
 
-	// r.POST("/resetpasswordverify", m.VerifyRequest(&req.ResetPasswordGetCode{}), c.ResetPasswordGetCode)
+	r.POST("/emailverify", c.VerifyEmail)
 
-	// r.POST("/updatepassword", m.VerifyRequest(&req.ResetPassword{}), m.CheckAuth(), c.UpdatePassword)
+	r.GET("/validate", m.CheckAuth(), c.Validate)
+	r.GET("/refresh", c.Refresh)
 
-	// r.POST("/emailverify", c.Verify)
-
-	// r.GET("/validate", m.CheckAuth(), c.Validate)
-	// r.GET("/refresh", c.Refresh)
-
-	// r.POST("/resetpassword", m.VerifyRequest(&req.ResetPasswordWithCode{}), c.ResetPasswordWithCode)
+	r.POST("/resetpasswordverify", m.VerifyRequest(&req.UserResetPasswordVerify{}), c.ResetPasswordVerify)
+	r.POST("/resetpassword", m.VerifyRequest(&req.UserResetPassword{}), c.ResetPassword)
 }

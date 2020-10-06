@@ -9,6 +9,6 @@ func SignUp(c *gin.Context) {
 	// r := resutil.New(c)
 }
 
-func verifyEmail(c *gin.Context) {
+func VerifyEmail(c *gin.Context) {
 	// r := resutil.New(c)
 }

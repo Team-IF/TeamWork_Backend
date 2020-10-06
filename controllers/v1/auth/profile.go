@@ -5,10 +5,14 @@ import (
 	// resutil "github.com/Team-IF/TeamWork_Backend/utils/res"
 )
 
-func updateProfile(c *gin.Context) {
+func GetProile(c *gin.Context) {
 	// r := resutil.New(c)
 }
 
-func updatePassword(c *gin.Context) {
+func UpdateProfile(c *gin.Context) {
+	// r := resutil.New(c)
+}
+
+func UpdatePassword(c *gin.Context) {
 	// r := resutil.New(c)
 }
