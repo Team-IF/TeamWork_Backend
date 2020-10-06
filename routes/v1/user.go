@@ -16,7 +16,7 @@ func setUserRoutes(r *gin.RouterGroup) {
 	r.GET("/signin", c.SignIn)
 	r.POST("/signup", m.VerifyRequest(&req.UserSignUp{}), c.SignUp)
 
-	r.POST("/emailverify", c.VerifyEmail)
+	r.POST("/emailverify", m.VerifyRequest(&req.UserVerifyEmail{}), c.VerifyEmail)
 
 	r.GET("/validate", m.CheckAuth(), c.Validate)
 	r.GET("/refresh", c.Refresh)

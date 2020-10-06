@@ -11,6 +11,10 @@ import (
 func SendVefiryMail(verifyCode, reciver string) error {
 	config := GetConfig().Mailgun
 
+	if config.SkipSend {
+		return nil
+	}
+
 	// Create an instance of the Mailgun Client
 	mg := mailgun.NewMailgun(config.Domain, config.ApiKey)
 
@@ -33,6 +37,10 @@ func SendVefiryMail(verifyCode, reciver string) error {
 
 func SendResetPasswordMail(code, reciver string) error {
 	config := GetConfig().Mailgun
+
+	if config.SkipSend {
+		return nil
+	}
 
 	// Create an instance of the Mailgun Client
 	mg := mailgun.NewMailgun(config.Domain, config.ApiKey)

@@ -8,6 +8,11 @@ type UserSignUp struct {
 	Password    string `json:"password" binding:"required"`
 }
 
+type UserVerifyEmail struct {
+	Email      string `json:"email" binding:"required"`
+	VerifyCode string `json:"verify_code" binding:"required"`
+}
+
 type UserSignIn struct {
 	ID       string `form:"id"`
 	Password string `form:"password"`

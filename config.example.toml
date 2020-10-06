@@ -14,6 +14,7 @@ username = ""
 path = "./test.db"
 
 [mailgun]
+skipsend = false
 apikey = ""
 domain = ""
 sender = ""

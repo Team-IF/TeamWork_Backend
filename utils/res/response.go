@@ -7,6 +7,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type R map[string]interface{}
+
 type res struct {
 	c *gin.Context
 }

@@ -17,9 +17,10 @@ type Config struct {
 		Path string
 	}
 	Mailgun struct {
-		ApiKey string
-		Domain string
-		Sender string
+		SkipSend bool
+		ApiKey   string
+		Domain   string
+		Sender   string
 	}
 	Etc struct {
 		JwtSecret string

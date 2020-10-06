@@ -7,6 +7,7 @@ import (
 	"github.com/Team-IF/TeamWork_Backend/utils"
 	resutil "github.com/Team-IF/TeamWork_Backend/utils/res"
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
 func SignUp(c *gin.Context) {
@@ -33,5 +34,19 @@ func SignUp(c *gin.Context) {
 }
 
 func VerifyEmail(c *gin.Context) {
-	// r := resutil.New(c)
+	r := resutil.New(c)
+	body := c.MustGet("body").(*req.UserVerifyEmail)
+	if err := db.VerifyEmail(body.Email, body.VerifyCode); err != nil {
+		if err == gorm.ErrRecordNotFound {
+			r.SendError(resutil.ERR_BAD_REQUEST, "Code or Email is not match")
+		} else if err == db.ErrAlreadyVerified {
+			r.SendError(resutil.ERR_BAD_REQUEST, "This Account is already Verified")
+		} else if err == db.ErrExpired {
+			r.SendError(resutil.ERR_BAD_REQUEST, "verify code expired")
+		} else {
+			r.SendError(resutil.ERR_SERVER, "Error while select")
+		}
+		return
+	}
+	r.Response(resutil.R{})
 }

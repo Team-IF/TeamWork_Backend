@@ -17,3 +17,21 @@ func CreateUser(name, displayName, avatar, email, password, verifyCode string) (
 
 	return userStruct.ID, result.Error
 }
+
+func VerifyEmail(email, verifyCode string) error {
+	var data dbmodels.UserEmail
+	if err := utils.GetDB().Where("value = ? AND verify_code = ?", email, verifyCode).First(&data).Error; err != nil {
+		return err
+	}
+
+	if data.Verified {
+		return ErrAlreadyVerified
+	}
+
+	if time.Now().After(data.Date.Add(time.Hour * 3)) {
+		return ErrExpired
+	}
+
+	result := utils.GetDB().Model(&dbmodels.UserEmail{}).Where("id = ?", data.ID).Update("verified", true)
+	return result.Error
+}
