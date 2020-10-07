@@ -1,7 +1,6 @@
 package db
 
 import (
-	"fmt"
 	"time"
 
 	dbmodels "github.com/Team-IF/TeamWork_Backend/models/db"
@@ -32,11 +31,10 @@ func SignIn(name, password string) (*dbmodels.User, error) {
 	return &data, nil
 }
 
-func FindUserByID(id uint) (data *dbmodels.User, err error) {
-	fmt.Println(id)
-	var data1 dbmodels.User
-	err = utils.GetDB().First(&data1, id).Error
-	return
+func FindUserByID(id uint) (*dbmodels.User, error) {
+	var data dbmodels.User
+	err := utils.GetDB().First(&data, id).Error
+	return &data, err
 }
 
 func VerifyEmail(email, verifyCode string) error {
