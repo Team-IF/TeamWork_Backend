@@ -54,3 +54,19 @@ func VerifyEmail(email, verifyCode string) error {
 	result := utils.GetDB().Model(&dbmodels.User{}).Where("id = ?", data.ID).Update("email_verified", true)
 	return result.Error
 }
+
+func UpdateProfile(id uint, name, displayName, avatar, email string) error {
+	result := utils.GetDB().Model(&dbmodels.User{}).Where("id = ?", id).Updates(&dbmodels.User{
+		Name:        name,
+		DisplayName: displayName,
+		Avatar:      avatar,
+		Email:       email,
+	})
+	return result.Error
+}
+
+func UpdatePassword(id uint, newPassword string) error {
+	hashedNew := utils.HashAndSalt(newPassword)
+	result := utils.GetDB().Model(&dbmodels.User{}).Where("id = ?", id).Update("password", hashedNew)
+	return result.Error
+}

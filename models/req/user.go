@@ -8,6 +8,13 @@ type UserSignUp struct {
 	Password    string `json:"password" binding:"required"`
 }
 
+type UserUpdateProfile struct {
+	Name        string `json:"userid" binding:"required"`
+	DisplayName string `json:"name" binding:"required"`
+	Email       string `json:"email" binding:"required"`
+	Avatar      string `json:"avatar"`
+}
+
 type UserVerifyEmail struct {
 	Email      string `json:"email" binding:"required"`
 	VerifyCode string `json:"verify_code" binding:"required"`

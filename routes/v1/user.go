@@ -10,8 +10,8 @@ import (
 func setUserRoutes(r *gin.RouterGroup) {
 
 	r.GET("/@me", m.CheckAuth(), c.GetProile)
-	r.PATCH("/@me", m.CheckAuth(), c.UpdateProfile)
-	r.PATCH("/@me/password", m.CheckAuth(), m.VerifyRequest(&req.UserResetPassword{}), c.UpdatePassword)
+	r.PATCH("/@me", m.CheckAuth(), m.VerifyRequest(&req.UserUpdateProfile{}), c.UpdateProfile)
+	r.PATCH("/@me/password", m.CheckAuth(), m.VerifyRequest(&req.UserUpdatePassword{}), c.UpdatePassword)
 
 	r.GET("/signin", m.VerifyQuery(&req.UserSignIn{}), c.SignIn)
 	r.POST("/signup", m.VerifyRequest(&req.UserSignUp{}), c.SignUp)
