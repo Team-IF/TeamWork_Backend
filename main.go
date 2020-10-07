@@ -82,7 +82,7 @@ func initDB() {
 	utils.SetDB(db)
 	log.Print("Successfully Connected To Database")
 
-	var models = []interface{}{&dbmodels.User{}, &dbmodels.UserEmail{}}
+	var models = []interface{}{&dbmodels.User{}}
 
 	if err := db.AutoMigrate(models...); err != nil {
 		log.Fatalln("Failed to perform AutoMigrate.")

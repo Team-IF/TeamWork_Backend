@@ -14,7 +14,7 @@ type UserVerifyEmail struct {
 }
 
 type UserSignIn struct {
-	ID       string `form:"id"`
+	ID       string `form:"userid"`
 	Password string `form:"password"`
 }
 
