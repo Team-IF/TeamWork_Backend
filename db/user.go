@@ -18,6 +18,11 @@ func CreateUser(name, displayName, avatar, email, password, verifyCode string) (
 	return userStruct.ID, result.Error
 }
 
+func FindUserByID(id uint) (data *dbmodels.User, err error) {
+	err = utils.GetDB().Find(&data, id).Error
+	return
+}
+
 func VerifyEmail(email, verifyCode string) error {
 	var data dbmodels.UserEmail
 	if err := utils.GetDB().Where("value = ? AND verify_code = ?", email, verifyCode).First(&data).Error; err != nil {

@@ -15,3 +15,14 @@ func VerifyRequest(data interface{}) gin.HandlerFunc {
 		c.Set("body", data)
 	}
 }
+
+func VerifyQuery(data interface{}) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		r := resutil.New(c)
+		if err := c.ShouldBindQuery(data); err != nil {
+			r.SendError(resutil.ERR_BAD_REQUEST, err.Error())
+			return
+		}
+		c.Set("query", data)
+	}
+}
