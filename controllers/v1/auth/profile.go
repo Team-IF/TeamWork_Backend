@@ -28,9 +28,21 @@ func UpdateProfile(c *gin.Context) {
 	user := c.MustGet("user").(*dbmodels.User)
 	body := c.MustGet("body").(*req.UserUpdateProfile)
 
-	if err := db.UpdateProfile(user.ID, body.Name, body.DisplayName, body.Avatar, body.Email); err != nil {
+	if err := db.UpdateProfile(user.ID, body.Name, body.DisplayName, body.Avatar); err != nil {
 		r.SendError(resutil.ERR_SERVER, "error while write db")
 		return
+	}
+
+	if body.Email != user.Email {
+		verifyCode := utils.CreateRandomString(8)
+		if err := db.UpdateEmail(user.ID, body.Email, verifyCode); err != nil {
+			r.SendError(resutil.ERR_SERVER, "error while write db")
+			return
+		}
+		if err := utils.SendVefiryMail(verifyCode, body.Email); err != nil {
+			r.SendError(resutil.ERR_SERVER, "error while sending email")
+			return
+		}
 	}
 
 	r.Response(&resutil.R{})

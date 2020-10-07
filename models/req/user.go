@@ -35,6 +35,7 @@ type UserResetPasswordVerify struct {
 }
 
 type UserResetPassword struct {
+	Email    string `json:"email" binding:"required"`
 	Verify   string `json:"verify" binding:"required"`
 	Password string `json:"password" binding:"required"`
 }

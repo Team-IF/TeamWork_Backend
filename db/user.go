@@ -10,7 +10,8 @@ import (
 func CreateUser(name, displayName, avatar, email, password, verifyCode string) (uint, error) {
 	hashedPassword := utils.HashAndSalt(password)
 
-	userStruct := dbmodels.User{Name: name, DisplayName: displayName, Avatar: avatar, Email: email, EmailVerified: false, EmailDate: time.Now(), EmailVerifyCode: verifyCode, Password: hashedPassword}
+	now := time.Now()
+	userStruct := dbmodels.User{Name: name, DisplayName: displayName, Avatar: avatar, Email: email, EmailVerified: false, EmailDate: &now, EmailVerifyCode: verifyCode, Password: hashedPassword, PasswordVerifyCode: "", PasswordDate: nil}
 
 	result := utils.GetDB().Create(&userStruct)
 
@@ -55,12 +56,21 @@ func VerifyEmail(email, verifyCode string) error {
 	return result.Error
 }
 
-func UpdateProfile(id uint, name, displayName, avatar, email string) error {
+func UpdateProfile(id uint, name, displayName, avatar string) error {
 	result := utils.GetDB().Model(&dbmodels.User{}).Where("id = ?", id).Updates(&dbmodels.User{
 		Name:        name,
 		DisplayName: displayName,
 		Avatar:      avatar,
-		Email:       email,
+	})
+	return result.Error
+}
+
+func UpdateEmail(id uint, email, verifyCode string) error {
+	now := time.Now()
+	result := utils.GetDB().Model(&dbmodels.User{}).Where("id = ?", id).Updates(&dbmodels.User{
+		Email:           email,
+		EmailVerifyCode: verifyCode,
+		EmailDate:       &now,
 	})
 	return result.Error
 }
@@ -68,5 +78,27 @@ func UpdateProfile(id uint, name, displayName, avatar, email string) error {
 func UpdatePassword(id uint, newPassword string) error {
 	hashedNew := utils.HashAndSalt(newPassword)
 	result := utils.GetDB().Model(&dbmodels.User{}).Where("id = ?", id).Update("password", hashedNew)
+	return result.Error
+}
+
+func PasswordVerifyCode(email, verifyCode string) error {
+	now := time.Now()
+	return utils.GetDB().Model(&dbmodels.User{}).Where("email = ?", email).Updates(&dbmodels.User{PasswordVerifyCode: verifyCode, PasswordDate: &now}).Error
+}
+
+func UpdatePasswordWithCode(email, password, verifyCode string) error {
+	var data dbmodels.User
+	if err := utils.GetDB().Select("password_date").Where("email = ? and password_verify_code = ?", email, verifyCode).First(&data).Error; err != nil {
+		return err
+	}
+
+	if time.Now().After(data.PasswordDate.Add(time.Hour * 3)) {
+		return ErrExpired
+	}
+
+	hashedNew := utils.HashAndSalt(password)
+	now := time.Now()
+	result := utils.GetDB().Model(&dbmodels.User{}).Where("id = ?", data.ID).Updates(
+		&dbmodels.User{Password: hashedNew, PasswordDate: &now, PasswordVerifyCode: ""})
 	return result.Error
 }
