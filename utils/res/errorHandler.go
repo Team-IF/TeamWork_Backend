@@ -16,38 +16,43 @@ const (
 	ERR_EXPIRED
 	ERR_ALREADY_VERIFIED
 	ERR_NOT_MATCH
+	ERR_NOT_FOUND
+	ERR_NO_PERMISSION
 )
 
 func (r *res) SendError(errType ErrType, text string) {
-	var Message, ErrCode string
+	var ErrCode string
 	var Status int
 
-	set := func(errCode, message string, status int) {
+	set := func(errCode string, status int) {
 		ErrCode = errCode
-		Message = message
 		Status = status
 	}
 
 	switch errType {
 	case ERR_BAD_REQUEST:
-		set("ERR_BAD_REQUEST", text, http.StatusBadRequest)
+		set("ERR_BAD_REQUEST", http.StatusBadRequest)
 	case ERR_SERVER:
-		set("ERR_SERVER", text, http.StatusInternalServerError)
+		set("ERR_SERVER", http.StatusInternalServerError)
 	case ERR_DUPLICATE:
-		set("ERR_DUPLICATE", text, http.StatusConflict)
+		set("ERR_DUPLICATE", http.StatusConflict)
 	case ERR_AUTH:
-		set("ERR_AUTH", text, http.StatusUnauthorized)
+		set("ERR_AUTH", http.StatusUnauthorized)
 	case ERR_EXPIRED:
-		set("ERR_EXPIRED", text, http.StatusBadRequest)
+		set("ERR_EXPIRED", http.StatusBadRequest)
 	case ERR_ALREADY_VERIFIED:
-		set("ERR_ALREADY_VERIFIED", text, http.StatusBadRequest)
+		set("ERR_ALREADY_VERIFIED", http.StatusBadRequest)
 	case ERR_NOT_MATCH:
-		set("ERR_NOT_MATCH", text, http.StatusBadRequest)
+		set("ERR_NOT_MATCH", http.StatusBadRequest)
+	case ERR_NOT_FOUND:
+		set("ERR_NOT_FOUND", http.StatusBadRequest)
+	case ERR_NO_PERMISSION:
+		set("ERR_NO_PERMISSION", http.StatusUnauthorized)
 	}
 
 	r.c.JSON(Status, gin.H{
 		"code":    ErrCode,
-		"message": Message,
+		"message": text,
 	})
 	r.c.Abort()
 }

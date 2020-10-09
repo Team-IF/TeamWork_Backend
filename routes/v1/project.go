@@ -10,4 +10,5 @@ import (
 
 func setProjectRoutes(r *gin.RouterGroup) {
 	r.POST("/", m.VerifyRequest(&req.ProjectCreate{}), c.CreateProject)
+	r.PATCH("/", m.VerifyRequest(&req.ProjectUpdate{}), c.UpdateProject)
 }
