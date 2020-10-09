@@ -6,4 +6,5 @@ var (
 	ErrAlreadyVerified  = errors.New("already verified")
 	ErrExpired          = errors.New("expired")
 	ErrPasswordNotMatch = errors.New("password not match")
+	ErrNoPermission     = errors.New("no permission")
 )
